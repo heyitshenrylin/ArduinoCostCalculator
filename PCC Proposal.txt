@@ -1,0 +1,27 @@
+CMPUT 274 FALL 2018
+AUTHORS: Eric Claerhout, Henry Lin
+IDS: 1532360, 1580649
+
+FINAL PROJECT: Parts Cost Calculator
+
+Description:
+	Create a search engine on specific electronic parts websites to find the
+best price on a list of parts given, along with quantities, to find the best deal.
+For example, wanting to buy a new raspberry pi, it will scrape the given sites to
+find the pi with the best price and return that number to you along with the URL
+for the product.
+
+Milestones:
+	1. Having a web scraper that can check prices of products
+	2. Implementing a general search with n results
+	3. Implementing a proper search with adafruit
+	4. Implementing a proper search with digi-key
+	5. Implementing a proper search with canada robotix
+	6. Output total products in a csv
+	7. Input wanted parts as a csv
+	8. Having a "Best Guess" for individual parts, total cost from single site, and total cost
+	
+	Bonus milestones:
+		- Implementing a proper search with amazon
+		- Implementing a proper search with mouser
+		- Implementing a proper search with robotshop
