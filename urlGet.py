@@ -2,13 +2,14 @@ from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
 
+
 # Source:
 # https://realpython.com/python-web-scraping-practical-introduction/
 def simple_get(url):
     """
-    Attempts to get the content at `url` by making an HTTP GET request.
-    If the content-type of response is some kind of HTML/XML, return the
-    text content, otherwise return None.
+        Attempts to get the content at 'url' by making an HTTP GET request.
+        If the content-type of response is some kind of HTML/XML, return the
+        text content, otherwise return None.
     """
     try:
         with closing(get(url, stream=True)) as resp:
@@ -24,7 +25,7 @@ def simple_get(url):
 
 def is_good_response(resp):
     """
-    Returns True if the response seems to be HTML, False otherwise.
+        Returns True if the response seems to be HTML, False otherwise.
     """
     content_type = resp.headers['Content-Type'].lower()
     return (resp.status_code == 200
@@ -34,8 +35,6 @@ def is_good_response(resp):
 
 def log_error(e):
     """
-    It is always a good idea to log errors.
-    This function just prints them, but you can
-    make it do anything.
+        printing log error
     """
     print(e)

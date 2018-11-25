@@ -5,3 +5,4 @@ Final Project CMPUT274
 Libraries needed:
 BeautifulSoup
 requests
+google-api-python-client
