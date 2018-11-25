@@ -6,3 +6,6 @@ Libraries needed:
 BeautifulSoup
 requests
 google-api-python-client
+contextlib (if not inside the VM version)
+
+CURRENT VERSION IS LIGHTLY "DEMOABLE"
