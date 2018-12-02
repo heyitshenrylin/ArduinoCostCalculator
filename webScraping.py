@@ -40,7 +40,7 @@ def priceGet(currentSite, searchTerm):
     # html is the BeautifulSoup tree of the given URL
     itemPage = BeautifulSoup(htmlRaw, 'html.parser')
 
-    # Current list of supported sites
+    # Current dictionary of supported sites
     supportedSites = {
         'amazon.ca': itemPage.find(id="priceblock_ourprice"),
         'adafruit.com': itemPage.find(id="prod-price"),
@@ -48,11 +48,12 @@ def priceGet(currentSite, searchTerm):
     }
 
     productPrice = supportedSites[currentSite]
-    return currentSite, productPrice.text
+    stripped = ''.join(i for i in productPrice.text if i in '1234567890.')
+    return currentSite, stripped
 
 
 # Currently a placeholder to be able to run the code
 # Changing the site and the search should let you search anything you
 # want on amazon.ca, adafruit.com, or canadarobotix.com
-bigBoys = priceGet('amazon.ca', 'arduino mega 2560')
+bigBoys = priceGet('adafruit.com', 'red LED')
 print(bigBoys)
