@@ -2,7 +2,7 @@ from urlGet import simple_get
 from customSearch import google_search
 from bs4 import BeautifulSoup
 
-# Henry's Google API account key and custom search engine
+# Henry's Google API key and custom search engine ID
 # DO NOT CHANGE
 MY_API_KEY = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"
 MY_CSE_ID = "012462952568133975478:6f88fk6n_rg"

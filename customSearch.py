@@ -1,36 +1,59 @@
 from googleapiclient.discovery import build
 
-
 # Source:
-# https://stackoverflow.com/questions/38635419/searching-in-google-with-python
-# DO NOT REMOVE
-MY_API_KEY = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"
-MY_CSE_ID = "012462952568133975478:6f88fk6n_rg"
+# https://stackoverflow.com/a/49122258
 
 
 def google_search(searchTerm, apiKey, cseId, **kwargs):
+    """ Google search function
+
+    This function interfaces with Google's Client API Library to do a
+    Google search using the specified search term. Returns a dictionary
+    containing the attributes of the results.
+
+    Using a custom search engine from the google developers console
+    under admin's name:
+    https://cse.google.com/cse?cx=012462952568133975478:6f88fk6n_rg
+
+    The custom search API was enabled and the API key is also on the
+    developer console. Currently the API key is set without restrictions
+    for the use in this project only.
+
+    Args:
+    - searchTerm: The string to be searched with the custom search
+                  engine.
+    - apiKey: The API key to access the Google APIs.
+    - cseID: The custom search engine ID to access the unique
+             search engine.
+    - **kwargs: Other arguments to be passed. Examples include using
+                'num=#' to specify the number of results to return.
+
+    Returns:
+    - res['items']: Large dictionary containing the attributes of the
+                    search, including the URLs under the key 'link'.
     """
-        Using a custom search engine from:
-        https://cse.google.com/cse?cx=012462952568133975478:6f88fk6n_rg
-        from the google developers console under admins name.
-
-        The custom search api was enabled and the api key is also on the
-        developer console.
-        Currently the API key is set without restrictions for the use in the
-        project only.
-
-        Args:
-        searchTerm : The string to be searched through the custom search
-        engine
-        apiKey : The API key for accessing google APIs
-        cseID : The custom search engine ID to be able to access the unique
-        search engine for the project
-        **kwargs : Number of results to return
-
-        Returns:
-        res['items'] : Large dictionary of all attributes of the google
-        search, includes URLs under the key 'link'
-    """
+    # Build and use the API service.
     service = build("customsearch", "v1", developerKey=apiKey)
     res = service.cse().list(q=searchTerm, cx=cseId, **kwargs).execute()
+
     return res['items']
+
+
+if __name__ == "__main__":
+    # Get user input for testing
+    searchTerm = input("Search term: ")
+    apiKey = input("API Key: ")
+    cseId = input("CSE ID: ")
+
+    # Run 'google_search'
+    try:
+        results = google_search(searchTerm, apiKey, cseId, num=1)
+        print(" --- Begin Results --- ")
+        print(results)
+    except KeyError as e:
+        print("customSearch encountered the following KeyError:")
+        print(e)
+        print("This is most likely because no results were found")
+    except Exception as e:
+        print("customSearch encountered the following error:")
+        print(e)
