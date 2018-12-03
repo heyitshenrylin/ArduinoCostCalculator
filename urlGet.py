@@ -5,17 +5,18 @@ from contextlib import closing
 
 # Source:
 # https://realpython.com/python-web-scraping-practical-introduction/
-def simple_get(url):
+def simpleGet(url):
     """
-        Attempts to get the content at 'url' by making an HTTP GET request.
-        If the content-type of response is some kind of HTML/XML, return the
-        text content, otherwise return None.
+        Attempts to get the content at 'url' by making an HTTP GET
+        request. If the content-type of response is some kind of
+        HTML/XML, return the text content, otherwise return None.
     """
     try:
         with closing(get(url, stream=True)) as resp:
-            if is_good_response(resp):
+            if isGoodResponse(resp):
                 return resp.content
             else:
+                print('No HTML found')
                 return None
 
     except RequestException as e:
@@ -23,7 +24,7 @@ def simple_get(url):
         return None
 
 
-def is_good_response(resp):
+def isGoodResponse(resp):
     """
         Returns True if the response seems to be HTML, False otherwise.
     """
@@ -38,12 +39,16 @@ def log_error(e):
         printing log error
     """
     print(e)
+    print('Please check your connection to the URL')
 
 
 if __name__ == "__main__":
     url = input("Enter a URL to request: ")
 
-    content = simple_get(url)
+    content = simpleGet(url)
     print(" --- Begin Results --- ")
-    print(content)
+    if(content is None):
+        print('None object received, check your URL to see if it is valid')
+    else:
+        print(content)
     print(" --- End of URL content --- ")

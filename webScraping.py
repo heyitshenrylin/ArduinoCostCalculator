@@ -1,8 +1,8 @@
-from urlGet import simple_get
-from customSearch import google_search
+from urlGet import simpleGet
+from customSearch import googleSearch
 from bs4 import BeautifulSoup
 
-# Henry's Google API key and custom search engine ID
+# Henry's Google API account key and custom search engine
 # DO NOT CHANGE
 MY_API_KEY = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"
 MY_CSE_ID = "012462952568133975478:6f88fk6n_rg"
@@ -31,12 +31,12 @@ def priceGet(currentSite, searchTerm):
         productPrice.text : The unformatted string for the price
             - Currently unformatted and doesn't strip any symbols
     """
-    # Calls the google_search function from customSearch.py
-    results = google_search(
+    # Calls the googleSearch function from customSearch.py
+    results = googleSearch(
         "site:{} {}".format(currentSite, searchTerm),
         MY_API_KEY, MY_CSE_ID, num=1)
-    # Calls the simple_get function from urlGet.py
-    htmlRaw = simple_get(results[0]["link"])
+    # Calls the simpleGet function from urlGet.py
+    htmlRaw = simpleGet(results[0]["link"])
     # html is the BeautifulSoup tree of the given URL
     itemPage = BeautifulSoup(htmlRaw, 'html.parser')
 
@@ -55,5 +55,6 @@ def priceGet(currentSite, searchTerm):
 # Currently a placeholder to be able to run the code
 # Changing the site and the search should let you search anything you
 # want on amazon.ca, adafruit.com, or canadarobotix.com
-bigBoys = priceGet('adafruit.com', 'red LED')
-print(bigBoys)
+if __name__ == "__main__":
+    bigBoys = priceGet('amazon.ca', 'red LED diode')
+    print(bigBoys)
