@@ -55,8 +55,7 @@ def priceGet(soup, bsSearchDict):
 
     Args:
     soup: The BeautifulSoup soup (tree object) from which to find the
-          price. Note that the price is only looked for in the body of
-          the soup for a slight speedup in the search.
+          price.
 
     bsSearchDict: A single element dictionary of the form
                   {keyword argument: keyword value} that acts as the
