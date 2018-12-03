@@ -38,3 +38,12 @@ def log_error(e):
         printing log error
     """
     print(e)
+
+
+if __name__ == "__main__":
+    url = input("Enter a URL to request: ")
+
+    content = simple_get(url)
+    print(" --- Begin Results --- ")
+    print(content)
+    print(" --- End of URL content --- ")
