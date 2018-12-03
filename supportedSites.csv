@@ -1,0 +1,4 @@
+site,currency,bsSearchKwArg,bsSearchValue
+adafruit.com,USD,id,"prod-price"
+amazon.ca,CAD,id,"priceblock_ourprice"
+canadarobotix.com,CAD,class_,"price-container"
