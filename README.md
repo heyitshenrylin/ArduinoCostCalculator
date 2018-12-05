@@ -11,4 +11,13 @@ Final Project CMPUT274
 All modules can be installed using
 `pip install --upgrade beautifulsoup4 requests google-api-python-client`
 
+
+## Notes
+Need to add data to supportedSites.csv *and* update the CSE to support a new
+site
+
+A string search was tested but it wasn't any faster and it complicated things
+a lot, plus isn't modular
+
+
 CURRENT VERSION IS LIGHTLY "DEMOABLE"
