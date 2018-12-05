@@ -4,7 +4,7 @@ from csv import DictReader
 from urlGet import simple_get
 from customSearch import google_search
 
-# Henry's Google API key and custom search engine ID
+# Henry's Google API account key and custom search engine
 # DO NOT CHANGE
 apiKey = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"
 cseID = "012462952568133975478:6f88fk6n_rg"

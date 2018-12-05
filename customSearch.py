@@ -4,7 +4,7 @@ from googleapiclient.discovery import build
 # https://stackoverflow.com/a/49122258
 
 
-def google_search(searchTerm, apiKey, cseId, **kwargs):
+def googleSearch(searchTerm, apiKey, cseId, **kwargs):
     """ Google search function
 
     This function interfaces with Google's Client API Library to do a
@@ -45,9 +45,9 @@ if __name__ == "__main__":
     apiKey = input("API Key: ")
     cseId = input("CSE ID: ")
 
-    # Run 'google_search'
+    # Run 'googleSearch'
     try:
-        results = google_search(searchTerm, apiKey, cseId, num=1)
+        results = googleSearch(searchTerm, apiKey, cseId, num=1)
         print(" --- Begin Results --- ")
         print(results)
     except KeyError as e:
