@@ -16,17 +16,16 @@ def simpleGet(url):
             if isGoodResponse(resp):
                 return resp.content
             else:
-                print('No HTML found')
                 return None
 
     except RequestException as e:
-        log_error('Error during requests to {0} : {1}'.format(url, str(e)))
+        logError('Error during requests to {0} : {1}'.format(url, str(e)))
         return None
 
 
 def isGoodResponse(resp):
     """
-        Returns True if the response seems to be HTML, False otherwise.
+    Returns true if the response seems to be HTML, false otherwise.
     """
     content_type = resp.headers['Content-Type'].lower()
     return (resp.status_code == 200
@@ -34,7 +33,7 @@ def isGoodResponse(resp):
             and content_type.find('html') > -1)
 
 
-def log_error(e):
+def logError(e):
     """
         printing log error
     """

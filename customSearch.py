@@ -9,7 +9,8 @@ def googleSearch(searchTerm, apiKey, cseId, **kwargs):
 
     This function interfaces with Google's Client API Library to do a
     Google search using the specified search term. Returns a dictionary
-    containing the attributes of the results.
+    containing the attributes of the results. If a result cannot be
+    found, returns None.
 
     Using a custom search engine from the google developers console
     under admin's name:
@@ -36,7 +37,11 @@ def googleSearch(searchTerm, apiKey, cseId, **kwargs):
     service = build("customsearch", "v1", developerKey=apiKey)
     res = service.cse().list(q=searchTerm, cx=cseId, **kwargs).execute()
 
-    return res['items']
+    try:
+        return res['items']
+    except KeyError:
+        # No results found
+        return None
 
 
 if __name__ == "__main__":
