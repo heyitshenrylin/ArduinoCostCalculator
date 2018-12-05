@@ -23,12 +23,12 @@ def getSoup(site, searchTerm, apiKey, cseID):
     - site: The root website URL (minus the leading https://www.) from
             which the search result should be found. [string]
     - searchTerm: The product name to search on the given site. [string]
+    - apiKey: The Google API key for the Google search [string]
+    - cseID: The Google custom search ID [string]
 
     Returns:
     - url: The found URL
     - soup: The BeautifulSoup tree object of the found website.
-    - apiKey: The Google API key for the Google search
-    - cseID: The Google custom search ID
     """
     # Calls the google_search function from customSearch.py to find a
     # suitable URL
