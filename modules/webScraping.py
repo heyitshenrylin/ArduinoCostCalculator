@@ -7,7 +7,7 @@
 ###########
 # Imports #
 ###########
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, SoupStrainer
 
 from htmlRequest import getHTML
 from customSearch import googleSearch
@@ -58,8 +58,11 @@ def getSoup(site, searchTerm, resultNum, apiKey, cseID):
     if htmlRaw is None:
         return url, None
 
+    # Using soupstrainer in bs4 to only grab the body where the price is
+    bodyStrained = SoupStrainer('body')
+
     # Creates a soup from the raw HTML
-    soup = BeautifulSoup(htmlRaw, 'html.parser')
+    soup = BeautifulSoup(htmlRaw, parse_only=bodyStrained)
 
     return url, soup
 

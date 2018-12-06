@@ -19,7 +19,7 @@ from webScraping import getSoup, priceGet
 ##################
 # User Variables #
 ##################
-# Henry's Google API keys and
+# Henry's Google API keys
 # apiKey = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"  # API Key 1
 # apiKey = "AIzaSyBpAVxvWwzQGEQBed8ppqdjQPgP1-A-c5w"  # API Key 2
 
