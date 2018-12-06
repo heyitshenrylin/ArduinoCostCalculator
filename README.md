@@ -108,3 +108,4 @@ element for the price.
 
 ## Readme To Do
 - Sequence diagram
+- Document input formatting
