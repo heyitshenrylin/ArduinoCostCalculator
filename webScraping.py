@@ -6,8 +6,8 @@ from customSearch import googleSearch
 
 # Henry's Google API account key and custom search engine
 # DO NOT CHANGE
-apiKey = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"
-apiKeyTester = "AIzaSyBpAVxvWwzQGEQBed8ppqdjQPgP1-A-c5w"
+# apiKey = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"  # API Key 1
+apiKey = "AIzaSyBpAVxvWwzQGEQBed8ppqdjQPgP1-A-c5w"  # API Key 2
 cseID = "012462952568133975478:6f88fk6n_rg"
 
 
