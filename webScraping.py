@@ -33,7 +33,7 @@ def getSoup(site, searchTerm, resultNum, apiKey, cseID):
     - url: The found URL
     - soup: The BeautifulSoup tree object of the found website.
     """
-    # Calls the google_search function from customSearch.py to find a
+    # Calls the googleSearch function from customSearch.py to find a
     # suitable URL
     searchResults = googleSearch("site:{} {}".format(site, searchTerm),
                                  apiKey, cseID, num=(resultNum))
@@ -45,7 +45,7 @@ def getSoup(site, searchTerm, resultNum, apiKey, cseID):
     # resultNum - 1 as the list indexing starts at 0
     url = searchResults[resultNum - 1]["link"]
 
-    # Calls the simple_get function from urlGet.py to get the raw
+    # Calls the simpleGet function from urlGet.py to get the raw
     # (plaintext) HTML content of the found URL
     htmlRaw = simpleGet(url)
 
