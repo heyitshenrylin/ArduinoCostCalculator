@@ -7,8 +7,14 @@
 ###########
 # Imports #
 ###########
+import sys
+import os
+
+# Local imports from the 'modules' folder
+sys.path.append(os.path.join(os.getcwd(), "modules"))
 from csvIO import getSupportedSites, getPartsList, writeOutput
 from webScraping import getSoup, priceGet
+
 
 ##################
 # User Variables #
