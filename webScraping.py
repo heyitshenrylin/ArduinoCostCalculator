@@ -1,44 +1,62 @@
+# Authors: Eric Claerhout, Henry Lin
+# Student IDs: 1532360, 1580649
+# CMPUT 274 Fall 2018
+#
+# Final Project: Cost Calculator
+
+###########
+# Imports #
+###########
 from bs4 import BeautifulSoup
-from sys import exit
-from csv import DictReader
-from urlGet import simple_get
-from customSearch import google_search
 
-# Henry's Google API account key and custom search engine
-# DO NOT CHANGE
-apiKey = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"
-cseID = "012462952568133975478:6f88fk6n_rg"
+from htmlRequest import getHTML
+from customSearch import googleSearch
 
 
-def getSoup(site, searchTerm, apiKey, cseID):
+#############
+# Functions #
+#############
+def getSoup(site, searchTerm, resultNum, apiKey, cseID):
     """Get Soup Function
     Uses a custom google search to find a webpage result for the given
     search term from the given website. Returns the URL of the found
     webpage and a soup (a BeautifulSoup tree object) of that webpage.
 
-    #FIXME
-    ADD REDUNDANCY AND ERROR CHECKING
+    If no search results can be found, both values will be returned as
+    None. If a URL can be found but it isn't an HTML webpage, the URL
+    will be retuned but the soup will be of type None.
 
     Args:
     - site: The root website URL (minus the leading https://www.) from
             which the search result should be found. [string]
     - searchTerm: The product name to search on the given site. [string]
-    - apiKey: The Google API key for the Google search [string]
-    - cseID: The Google custom search ID [string]
+    - resultNum: Which Google result to use. (2 -> 2nd result). [int]
+    - apiKey: The Google API key for the Google search. [string]
+    - cseID: The Google custom search ID. [string]
 
     Returns:
     - url: The found URL
     - soup: The BeautifulSoup tree object of the found website.
     """
-    # Calls the google_search function from customSearch.py to find a
+    # Calls the googleSearch function from customSearch.py to find a
     # suitable URL
-    searchResults = google_search("site:{} {}".format(site, searchTerm),
-                                  apiKey, cseID, num=1)
-    url = searchResults[0]["link"]
+    searchResults = googleSearch("site:{} {}".format(site, searchTerm),
+                                 apiKey, cseID, num=(resultNum))
 
-    # Calls the simple_get function from urlGet.py to get the raw
-    # (plaintext) HTML content of the found URL
-    htmlRaw = simple_get(url)
+    # If no search results could be found
+    if searchResults is None:
+        return None, None
+
+    # resultNum - 1 as the list indexing starts at 0
+    url = searchResults[resultNum - 1]["link"]
+
+    # Calls the getHTML function from urlGet.py to get the raw
+    # HTML content of the found URL
+    htmlRaw = getHTML(url)
+
+    # If the search result was not HTML (PDF, XML, etc.)
+    if htmlRaw is None:
+        return url, None
 
     # Creates a soup from the raw HTML
     soup = BeautifulSoup(htmlRaw, 'html.parser')
@@ -51,76 +69,29 @@ def priceGet(soup, bsSearchDict):
     Returns the price of a product from that product's webpage. Uses
     BeautifulSoup's find with the specified 'bsSearchDict' to get the
     price from the given soup, and then cleans the output to only return
-    a numeric price value.
+    a numeric price value. Returns None if no price can be found.
 
     Args:
-    soup: The BeautifulSoup soup (tree object) from which to find the
-          price.
-
-    bsSearchDict: A single element dictionary of the form
-                  {keyword argument: keyword value} that acts as the
-                  argument for BeautifulSoup's .find() method.
-                  For example, {id, "price"} will be implemented as
-                  soup.find(id="price").
+    - soup: The BeautifulSoup soup (tree object) from which to find the
+            price.
+    - bsSearchDict: A single element dictionary of the form
+                    {keyword argument: keyword value} that acts as the
+                    argument for BeautifulSoup's .find() method.
+                    For example, {id, "price"} will be implemented as
+                    soup.find(id="price").
 
     Returns:
-    cleanedPrice: The price of the product with any symbols or spaces
-                  removed. [string]
+    - cleanedPrice: The price of the product with any symbols or spaces
+                    removed. [string]
     """
     # Get the price from the soup (HTML)
     foundPrice = soup.find(**bsSearchDict)
 
+    # If the price could not be found
+    if foundPrice is None:
+        return None
+
     # Clean the text before returning it
     cleanedPrice = ''.join(i for i in foundPrice.text if i in '1234567890.')
+
     return cleanedPrice
-
-
-def getSupportedSites():
-    """ Get Supported Sites Function
-
-    Returns a list of dictionaries w/ site and BS search ID
-    """
-    supportedSites = []
-    try:
-        with open('supportedSites.csv', newline='', mode='r') as csvFile:
-            csvReader = DictReader(csvFile)
-            for row in csvReader:
-                supportedSites.append(dict(row))
-        return supportedSites
-
-    # Exceptions
-    except FileNotFoundError:
-        print("supportedSites.csv could not be found.")
-        print("Quitting...")
-        exit()
-    except Exception as e:
-        print("getSupportedSites encountered the following error:")
-        print(e)
-        print("Quitting...")
-        exit()
-
-
-# Currently a placeholder to be able to run the code
-# Should check all supportedSites but may error out if something
-# can't be found. "Yellow LED" works
-supportedSites = getSupportedSites()
-searchTerm = input("What are you looking for? ")
-
-prices = []
-for siteInfo in supportedSites:
-    # Fill 'resultsDict' with information already known
-    resultsDict = {}
-    resultsDict["site"] = siteInfo["site"]
-    resultsDict["currency"] = siteInfo["currency"]
-
-    # Find a webpage, get the URL of the page and its soup
-    resultsDict["url"], soup = getSoup(siteInfo["site"], searchTerm, apiKey,
-                                       cseID)
-
-    # Get the price of the product
-    bsSearchDict = {siteInfo["bsSearchKwArg"]: siteInfo["bsSearchValue"]}
-    resultsDict["price"] = priceGet(soup, bsSearchDict)
-
-    # Output / Save the results
-    print(resultsDict)
-    prices.append(resultsDict)

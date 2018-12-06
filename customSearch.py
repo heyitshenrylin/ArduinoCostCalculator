@@ -1,15 +1,24 @@
+# Authors: Eric Claerhout, Henry Lin
+# Student IDs: 1532360, 1580649
+# CMPUT 274 Fall 2018
+#
+# Final Project: Cost Calculator
+
+###########
+# Imports #
+###########
 from googleapiclient.discovery import build
 
-# Source:
-# https://stackoverflow.com/a/49122258
 
-
+#############
+# Functions #
+#############
 def googleSearch(searchTerm, apiKey, cseId, **kwargs):
     """ Google search function
-
     This function interfaces with Google's Client API Library to do a
     Google search using the specified search term. Returns a dictionary
-    containing the attributes of the results.
+    containing the attributes of the results. If a result cannot be
+    found, returns None.
 
     Using a custom search engine from the google developers console
     under admin's name:
@@ -18,6 +27,8 @@ def googleSearch(searchTerm, apiKey, cseId, **kwargs):
     The custom search API was enabled and the API key is also on the
     developer console. Currently the API key is set without restrictions
     for the use in this project only.
+
+    Source: https://stackoverflow.com/a/49122258
 
     Args:
     - searchTerm: The string to be searched with the custom search
@@ -36,9 +47,16 @@ def googleSearch(searchTerm, apiKey, cseId, **kwargs):
     service = build("customsearch", "v1", developerKey=apiKey)
     res = service.cse().list(q=searchTerm, cx=cseId, **kwargs).execute()
 
-    return res['items']
+    try:
+        return res['items']
+    except KeyError:
+        # No results found
+        return None
 
 
+########
+# Main #
+########
 if __name__ == "__main__":
     # Get user input for testing
     searchTerm = input("Search term: ")
