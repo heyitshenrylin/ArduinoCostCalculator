@@ -1,12 +1,13 @@
 from bs4 import BeautifulSoup
 from sys import exit
 from csv import DictReader
-from urlGet import simple_get
-from customSearch import google_search
+from urlGet import simpleGet
+from customSearch import googleSearch
 
 # Henry's Google API account key and custom search engine
 # DO NOT CHANGE
 apiKey = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"
+apiKeyTester = "AIzaSyBpAVxvWwzQGEQBed8ppqdjQPgP1-A-c5w"
 cseID = "012462952568133975478:6f88fk6n_rg"
 
 
@@ -30,15 +31,15 @@ def getSoup(site, searchTerm, apiKey, cseID):
     - url: The found URL
     - soup: The BeautifulSoup tree object of the found website.
     """
-    # Calls the google_search function from customSearch.py to find a
+    # Calls the googleSearch function from customSearch.py to find a
     # suitable URL
-    searchResults = google_search("site:{} {}".format(site, searchTerm),
+    searchResults = googleSearch("site:{} {}".format(site, searchTerm),
                                   apiKey, cseID, num=1)
     url = searchResults[0]["link"]
 
-    # Calls the simple_get function from urlGet.py to get the raw
+    # Calls the simpleGet function from urlGet.py to get the raw
     # (plaintext) HTML content of the found URL
-    htmlRaw = simple_get(url)
+    htmlRaw = simpleGet(url)
 
     # Creates a soup from the raw HTML
     soup = BeautifulSoup(htmlRaw, 'html.parser')
