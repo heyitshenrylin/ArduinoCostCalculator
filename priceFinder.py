@@ -89,14 +89,16 @@ def getData(siteInfo, searchTerm, resultAttempts):
 
         # If price cannot be found, try again
         if foundPrice is None and i != resultAttempts:
-            print("The product price could not be found on following URL. "
-                  "Trying again with the next result.")
-            print(resultsDict["URL"] + "\n")
+            print("The price could not be found on result {} for '{}' on "
+                  "'{}'. Trying again with the next "
+                  "result.".format(i, searchTerm, siteInfo["site"]))
             continue
 
         # FIXME
         elif foundPrice is None and i == resultAttempts:
-            print("Couldn't find anything after {} attempts".format(resultAttempts))
+            print("Price could not be found after {} attempts on '{}', "
+                  "searching for '{}'. Moving on to the next "
+                  "site.".format(resultAttempts, siteInfo["site"], searchTerm))
             return None
 
         # If price was successfully found, save it and move onto the
@@ -112,31 +114,61 @@ def getData(siteInfo, searchTerm, resultAttempts):
 ########
 # Main #
 ########
+print("Welcome to Price Finder!")
 
 # Get input
+print("Reading input from partsList.csv ...", end=" ")
 supportedSites = getSupportedSites()
 partsList = getPartsList()
+print("Done.")
+
+print("\nStarting the price search!")
+print("Progress below is formatted as")
+print("{{Part Types Progress}} [Parts Progress] (Site Progress)")
+print("--------------------------------------------------------")
 
 results = []
+partTypeCounter = 1
 
 # Find prices for all part types
 for partType in partsList:
+    # Generate progress string
+    partTypeProg = "{{{}/{}}}".format(partTypeCounter, len(partsList))
 
     partPrices = []
+    partCounter = 1
+
     # Find prices for all parts (and their alternatives) in a part type
     for part in partType:
-        print("Getting prices for '{}'".format(part), end=" ")
+        # Generate progress string
+        partProg = "[{}/{}]".format(partCounter, len(partType))
 
+        siteCounter = 1
         # Find prices from all of the supported sites
         for siteInfo in supportedSites:
+            # Generate progress string
+            siteProg = "({}/{})".format(siteCounter, len(supportedSites))
+
+            # Print progress
+            print(partTypeProg, partProg, siteProg)
+
+            # Get the resulting data
             partPrices.append(getData(siteInfo, part, resultAttempts))
 
-    # Save the partPrices.
+            siteCounter += 1
+
+        partCounter += 1
+
     results.append(list(filter(None, partPrices)))
+
+    partTypeCounter += 1
 
 results = list(filter(None, results))
 
 writeOutput(results, ["Product", "Site", "Price", "Currency", "URL"])
+
+print("--------------------------------------------------------")
+print("Done! See output.csv for the results!")
 
 
 # Part prices is a list of dictionaries -> all results for a given type
