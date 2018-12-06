@@ -19,7 +19,8 @@ site
 A string search was tested but it wasn't any faster and it complicated things
 a lot, plus isn't modular
 
-Google API is limited to 100 searches a day.
+Google API is limited to 100 searches a day. CSE is limited to 10,000 searches
+a day.
 
 
 ## Project Goals
