@@ -27,7 +27,7 @@ from webScraping import getSoup, priceGet
 # apiKey = "AIzaSyBEyy6-aFEzGLMMtq9kuTm5k0yCqD7TsFs"  # API Key 1
 apiKey = "AIzaSyDek6VKnGwOKUesIHeeMfYo0rGGsKpqQ_4"  # API Key 2
 
-# Henry's custom search engine [DO NOT CHANGE]
+# Henry's Custom Search Engine [DO NOT CHANGE]
 cseID = "012462952568133975478:6f88fk6n_rg"
 
 
@@ -43,24 +43,24 @@ def getOutput(siteInfo, searchTerm):
     """
     # Fill 'resultsDict' with information already known
     resultsDict = {}
-    resultsDict["product"] = searchTerm
-    resultsDict["site"] = siteInfo["site"]
-    resultsDict["currency"] = siteInfo["currency"]
+    resultsDict["Product"] = searchTerm
+    resultsDict["Site"] = siteInfo["site"]
+    resultsDict["Currency"] = siteInfo["currency"]
 
     # Loop for error checking
     for i in range(1, 4):
         # Find a webpage, get the URL of the page and its soup
-        resultsDict["url"], soup = getSoup(siteInfo["site"], searchTerm, i,
+        resultsDict["URL"], soup = getSoup(siteInfo["site"], searchTerm, i,
                                            apiKey, cseID)
 
         # If no search results can be found, return None
-        if resultsDict["url"] is None and soup is None:
+        if resultsDict["URL"] is None and soup is None:
             print("No search results for '{}' on '{}'. Moving on to the next "
                   "site.".format(searchTerm, siteInfo["site"]))
             return None
 
         # If the search result is not HTML, move onto the next result
-        elif resultsDict["url"] is not None and soup is None:
+        elif resultsDict["URL"] is not None and soup is None:
             print("Search result {} for '{}' on '{}' was not HTML. Trying "
                   "again with the next result.".format(i, searchTerm,
                                                        siteInfo["site"]))
@@ -74,7 +74,7 @@ def getOutput(siteInfo, searchTerm):
         if foundPrice is None and i != 3:
             print("The product price could not be found on following URL. "
                   "Trying again with the next result.")
-            print(resultsDict["url"] + "\n")
+            print(resultsDict["URL"] + "\n")
             continue
 
         # FIXME
@@ -85,7 +85,7 @@ def getOutput(siteInfo, searchTerm):
         # If price was successfully found, save it and move onto the
         # next site.
         else:
-            resultsDict["price"] = foundPrice
+            resultsDict["Price"] = foundPrice
             break
 
     # Output / Save the results
@@ -114,10 +114,12 @@ for partType in partsList:
         for siteInfo in supportedSites:
             partPrices.append(getOutput(siteInfo, part))
 
-    # Save the partPrices. Using filter to remove the None entries
+    # Save the partPrices.
     results.append(list(filter(None, partPrices)))
 
-writeOutput(results, ["product", "site", "price", "currency", "url"])
+results = list(filter(None, results))
+
+writeOutput(results, ["Product", "Site", "Price", "Currency", "URL"])
 
 
 # Part prices is a list of dictionaries -> all results for a given type
