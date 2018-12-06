@@ -1,16 +1,21 @@
+# Authors: Eric Claerhout, Henry Lin
+# Student IDs: 1532360, 1580649
+# CMPUT 274 Fall 2018
+#
+# Final Project: Cost Calculator
+
+###########
+# Imports #
+###########
 from bs4 import BeautifulSoup
-from sys import exit
-from csv import DictReader
-from urlGet import simpleGet
+
+from htmlRequest import getHTML
 from customSearch import googleSearch
 
-# Henry's Google API account key and custom search engine
-# DO NOT CHANGE
-# apiKey = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"  # API Key 1
-apiKey = "AIzaSyBpAVxvWwzQGEQBed8ppqdjQPgP1-A-c5w"  # API Key 2
-cseID = "012462952568133975478:6f88fk6n_rg"
 
-
+#############
+# Functions #
+#############
 def getSoup(site, searchTerm, resultNum, apiKey, cseID):
     """Get Soup Function
     Uses a custom google search to find a webpage result for the given
@@ -45,9 +50,9 @@ def getSoup(site, searchTerm, resultNum, apiKey, cseID):
     # resultNum - 1 as the list indexing starts at 0
     url = searchResults[resultNum - 1]["link"]
 
-    # Calls the simpleGet function from urlGet.py to get the raw
-    # (plaintext) HTML content of the found URL
-    htmlRaw = simpleGet(url)
+    # Calls the getHTML function from urlGet.py to get the raw
+    # HTML content of the found URL
+    htmlRaw = getHTML(url)
 
     # If the search result was not HTML (PDF, XML, etc.)
     if htmlRaw is None:
@@ -90,95 +95,3 @@ def priceGet(soup, bsSearchDict):
     cleanedPrice = ''.join(i for i in foundPrice.text if i in '1234567890.')
 
     return cleanedPrice
-
-
-def getSupportedSites():
-    """ Get Supported Sites Function
-
-    Returns a list of dictionaries w/ site and BS search ID
-    """
-    supportedSites = []
-    try:
-        with open('supportedSites.csv', newline='', mode='r') as csvFile:
-            csvReader = DictReader(csvFile)
-            for row in csvReader:
-                supportedSites.append(dict(row))
-        return supportedSites
-
-    # Exceptions
-    except FileNotFoundError:
-        print("supportedSites.csv could not be found.")
-        print("Quitting...")
-        exit()
-    except Exception as e:
-        print("getSupportedSites encountered the following error:")
-        print(e)
-        print("Quitting...")
-        exit()
-
-
-########
-# MAIN #
-########
-
-# Currently a placeholder to be able to run the code
-supportedSites = getSupportedSites()
-searchTerm = input("What are you looking for? ")
-
-prices = []
-for siteInfo in supportedSites:
-    # Fill 'resultsDict' with information already known
-    resultsDict = {}
-    resultsDict["site"] = siteInfo["site"]
-    resultsDict["currency"] = siteInfo["currency"]
-
-    # Loop for error checking
-    for i in range(1, 4):
-        # Find a webpage, get the URL of the page and its soup
-        resultsDict["url"], soup = getSoup(siteInfo["site"], searchTerm, i,
-                                           apiKey, cseID)
-
-        # If no search results can be found, move onto the next site
-        if resultsDict["url"] is None and soup is None:
-            print("No search results for '{}' on '{}'. Moving on to the next "
-                  "site.".format(searchTerm, siteInfo["site"]))
-            break
-
-        # If the search result is not HTML, move onto the next result
-        elif resultsDict["url"] is not None and soup is None:
-            print("Search result {} for '{}' on '{}' was not HTML. Trying "
-                  "again with the next result.".format(i, searchTerm,
-                                                       siteInfo["site"]))
-            continue
-
-        # Get the price of the product
-        bsSearchDict = {siteInfo["bsSearchKwArg"]: siteInfo["bsSearchValue"]}
-        foundPrice = priceGet(soup, bsSearchDict)
-
-        # If price cannot be found, try again
-        if foundPrice is None and i != 3:
-            print("The product price could not be found on following URL. "
-                  "Trying again with the next result.")
-            print(resultsDict["url"] + "\n")
-            continue
-
-        # FIXME
-        elif foundPrice is None and i == 3:
-            print("Couldn't find anything after 3 attempts")
-            break
-
-        # If price was successfully found, save it and move onto the
-        # next site.
-        else:
-            resultsDict["price"] = foundPrice
-
-            # Add the resultsDict to the final prices list
-            prices.append(resultsDict)
-            break
-
-    # Output / Save the results
-    print(resultsDict)
-
-
-print("\nFinal data:")
-print(prices)
