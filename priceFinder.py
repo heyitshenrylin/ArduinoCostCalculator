@@ -124,7 +124,7 @@ print("Done.")
 
 print("\nStarting the price search!")
 print("Progress below is formatted as")
-print("{{Part Types Progress}} [Parts Progress] (Site Progress)")
+print("{Part Types Progress} [Parts Progress] (Site Progress)")
 print("--------------------------------------------------------")
 
 results = []

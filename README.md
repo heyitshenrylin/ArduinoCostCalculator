@@ -9,10 +9,9 @@ CMPUT 274 Fall 2018
 - google-api-python-client (https://pypi.org/project/google-api-python-client/)
 
 All modules can be installed using
-`pip install --upgrade beautifulsoup4 requests google-api-python-client`
+`pip3 install --upgrade beautifulsoup4 requests google-api-python-client`
 
-## Readme To Do
-The sequence diagram
+
 
 ## Notes
 Need to add data to supportedSites.csv *and* update the CSE to support a new
@@ -65,3 +64,6 @@ element for the price.
 - Live currency conversion
 - Scraping product names in addition to prices
 - Command line arguments for the input / output files
+
+## Readme To Do
+- Sequence diagram
