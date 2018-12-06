@@ -9,7 +9,7 @@
 ###########
 from bs4 import BeautifulSoup
 
-from urlGet import simpleGet
+from htmlRequest import getHTML
 from customSearch import googleSearch
 
 
@@ -50,9 +50,9 @@ def getSoup(site, searchTerm, resultNum, apiKey, cseID):
     # resultNum - 1 as the list indexing starts at 0
     url = searchResults[resultNum - 1]["link"]
 
-    # Calls the simpleGet function from urlGet.py to get the raw
-    # (plaintext) HTML content of the found URL
-    htmlRaw = simpleGet(url)
+    # Calls the getHTML function from urlGet.py to get the raw
+    # HTML content of the found URL
+    htmlRaw = getHTML(url)
 
     # If the search result was not HTML (PDF, XML, etc.)
     if htmlRaw is None:
