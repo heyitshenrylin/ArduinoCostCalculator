@@ -1,8 +1,20 @@
+# Authors: Eric Claerhout, Henry Lin
+# Student IDs: 1532360, 1580649
+# CMPUT 274 Fall 2018
+#
+# Final Project: Cost Calculator
+
+###########
+# Imports #
+###########
 from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
 
 
+#############
+# Functions #
+#############
 # Source:
 # https://realpython.com/python-web-scraping-practical-introduction/
 def simpleGet(url):
