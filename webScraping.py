@@ -6,7 +6,8 @@ from customSearch import googleSearch
 
 # Henry's Google API account key and custom search engine
 # DO NOT CHANGE
-apiKey = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"
+# apiKey = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"  # API Key 1
+apiKey = "AIzaSyBpAVxvWwzQGEQBed8ppqdjQPgP1-A-c5w"  # API Key 2
 cseID = "012462952568133975478:6f88fk6n_rg"
 
 
@@ -158,7 +159,7 @@ for siteInfo in supportedSites:
         if foundPrice is None and i != 3:
             print("The product price could not be found on following URL. "
                   "Trying again with the next result.")
-            print(resultsDict["url"])
+            print(resultsDict["url"] + "\n")
             continue
 
         # FIXME
@@ -170,8 +171,14 @@ for siteInfo in supportedSites:
         # next site.
         else:
             resultsDict["price"] = foundPrice
+
+            # Add the resultsDict to the final prices list
+            prices.append(resultsDict)
             break
 
     # Output / Save the results
     print(resultsDict)
-    prices.append(resultsDict)
+
+
+print("\nFinal data:")
+print(prices)
