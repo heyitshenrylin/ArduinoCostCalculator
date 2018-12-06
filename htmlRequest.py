@@ -2,7 +2,7 @@
 # Student IDs: 1532360, 1580649
 # CMPUT 274 Fall 2018
 #
-# Final Project: Cost Calculator
+# Final Project: Price Finder
 
 ###########
 # Imports #

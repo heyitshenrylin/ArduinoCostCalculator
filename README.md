@@ -1,4 +1,4 @@
-# ArduinoCostCalculator
+# Component Price Finder
 Final Project CMPUT274
 140 kids in class
 
@@ -6,11 +6,15 @@ Final Project CMPUT274
 - BeautifulSoup4 (https://pypi.org/project/beautifulsoup4/)
 - requests (https://pypi.org/project/requests/)
 - google-api-python-client (https://pypi.org/project/google-api-python-client/)
-- contextlib (included with Python)
 
 All modules can be installed using
 `pip install --upgrade beautifulsoup4 requests google-api-python-client`
 
+## HENRY TO DO
+- Implement command line arguments to specify input / output files
+
+## Readme To Do
+The sequence diagram
 
 ## Notes
 Need to add data to supportedSites.csv *and* update the CSE to support a new
@@ -36,6 +40,8 @@ Using BeautifulSoup's find method in combination with the CSV site data
 allows sites to be easily added as long as there is an identifying HTML
 element for the price. Note that our custom search engine restricts the
 results to the supported sites, so the
+
+### ✔ Containing the results in a simple format that can be passed to another function
 
 ### ✖ Support for equivalent products
 [talk about it] not implemented but infrastructure is in place -> csv style

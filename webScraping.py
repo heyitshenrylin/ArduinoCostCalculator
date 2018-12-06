@@ -2,7 +2,7 @@
 # Student IDs: 1532360, 1580649
 # CMPUT 274 Fall 2018
 #
-# Final Project: Cost Calculator
+# Final Project: Price Finder
 
 ###########
 # Imports #
@@ -17,7 +17,7 @@ from customSearch import googleSearch
 # Functions #
 #############
 def getSoup(site, searchTerm, resultNum, apiKey, cseID):
-    """Get Soup Function
+    """ Get Soup Function
     Uses a custom google search to find a webpage result for the given
     search term from the given website. Returns the URL of the found
     webpage and a soup (a BeautifulSoup tree object) of that webpage.
