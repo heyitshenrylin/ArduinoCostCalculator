@@ -19,27 +19,44 @@ from webScraping import getSoup, priceGet
 ##################
 # User Variables #
 ##################
-# Henry's Google API keys and
+# Henry's Google API keys [DO NOT CHANGE]
 # apiKey = "AIzaSyD7H29aH47QGEk10KNZKsKH1DZQ8CJhbyI"  # API Key 1
 # apiKey = "AIzaSyBpAVxvWwzQGEQBed8ppqdjQPgP1-A-c5w"  # API Key 2
 
 # Eric's Google API keys [DO NOT CHANGE]
 # apiKey = "AIzaSyBEyy6-aFEzGLMMtq9kuTm5k0yCqD7TsFs"  # API Key 1
-apiKey = "AIzaSyDek6VKnGwOKUesIHeeMfYo0rGGsKpqQ_4"  # API Key 2
+# apiKey = "AIzaSyDek6VKnGwOKUesIHeeMfYo0rGGsKpqQ_4"  # API Key 2
+apiKey = "AIzaSyDJ1Yr1uFW6A9ZBhV7BFuxtolYY7hnHzEg"  # API Key 3
 
 # Henry's Custom Search Engine [DO NOT CHANGE]
 cseID = "012462952568133975478:6f88fk6n_rg"
+
+# Number of Google results from which a price will be attempted to be found
+# before moving on to the next site
+resultAttempts = 3
 
 
 #############
 # Functions #
 #############
-def getOutput(siteInfo, searchTerm):
-    """
-    FIX THIS AND THIS NAME
-    getResults?
+def getData(siteInfo, searchTerm, resultAttempts):
+    """ Get Data Function
+    Primary function for priceFinder.py. Returns a dictionary of results
+    containing elements such as the found price and the product page's
+    URL for a given search term and a given siteInfo dictionary. This is
+    completed through two primary steps, firstly getting the webpage
+    information, and then finding the price on said webpage. See the
+    individual function headers (getSoup and priceGet) for more
+    information.
+    Returns None if there are no search results available for the search
+    term, or if the max number of result attempts is reached.
 
-    returns none if it runs out of attempts or if no results can be found
+    Args:
+    - siteInfo: A dictionary containing information about the site being
+                searched, as specified in supportedSites.csv
+    - searchTerm: The current product being searched.
+    - resultAttempts: The number of Google results from which a price
+                      will try to be pulled before timing out.
     """
     # Fill 'resultsDict' with information already known
     resultsDict = {}
@@ -48,7 +65,7 @@ def getOutput(siteInfo, searchTerm):
     resultsDict["Currency"] = siteInfo["currency"]
 
     # Loop for error checking
-    for i in range(1, 4):
+    for i in range(1, resultAttempts + 1):
         # Find a webpage, get the URL of the page and its soup
         resultsDict["URL"], soup = getSoup(siteInfo["site"], searchTerm, i,
                                            apiKey, cseID)
@@ -71,15 +88,15 @@ def getOutput(siteInfo, searchTerm):
         foundPrice = priceGet(soup, bsSearchDict)
 
         # If price cannot be found, try again
-        if foundPrice is None and i != 3:
+        if foundPrice is None and i != resultAttempts:
             print("The product price could not be found on following URL. "
                   "Trying again with the next result.")
             print(resultsDict["URL"] + "\n")
             continue
 
         # FIXME
-        elif foundPrice is None and i == 3:
-            print("Couldn't find anything after 3 attempts")
+        elif foundPrice is None and i == resultAttempts:
+            print("Couldn't find anything after {} attempts".format(resultAttempts))
             return None
 
         # If price was successfully found, save it and move onto the
@@ -112,7 +129,7 @@ for partType in partsList:
 
         # Find prices from all of the supported sites
         for siteInfo in supportedSites:
-            partPrices.append(getOutput(siteInfo, part))
+            partPrices.append(getData(siteInfo, part, resultAttempts))
 
     # Save the partPrices.
     results.append(list(filter(None, partPrices)))

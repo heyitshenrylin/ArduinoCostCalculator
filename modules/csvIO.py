@@ -78,7 +78,6 @@ def getPartsList():
 
 def writeOutput(results, fieldnames):
     """ Write Output Function
-
     Outputs the various part prices from the given results to
     output.csv, where 'results' is a list of lists of dictionaries. Each
     dictionary represents the data (prices) for an individual site, the
