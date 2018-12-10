@@ -1,10 +1,15 @@
 Product,Site,Price,Currency,URL
 red led,adafruit.com,8.00,USD,https://www.adafruit.com/product/297
-red led,canadarobotix.com,1.99,CAD,http://www.canadarobotix.com/parts-basic-led-red
+red led,amazon.ca,,CAD,https://www.amazon.ca/HyperX-Tenkeyless-Mechanical-HX-KB4RD1-US-R1/dp/B074F5L8GQ
+red led,canadarobotix.com,1.99,CAD,http://www.canadarobotix.com/parts-basic-3mm-led-green
+yellow led,adafruit.com,4.95,USD,https://www.adafruit.com/product/2700
+yellow led,amazon.ca,,CAD,https://www.amazon.ca/SODIAL-Green-Yellow-White-Light/dp/B00L317D5U
+yellow led,canadarobotix.com,18.99,CAD,http://www.canadarobotix.com/1519-8-digit-spi-7-segment-led-display-yellow
 ,,,,
 breadboard,adafruit.com,5.00,USD,https://www.adafruit.com/product/64
-breadboard,canadarobotix.com,2.99,CAD,http://www.canadarobotix.com/1220-Mini-Breadboard-Modular-with-Self-Adhesive-170-Tie-Point-Green
+breadboard,amazon.ca,,CAD,https://www.amazon.ca/Solderable-BreadBoard-matches-tie-point-breadboards/dp/B0040Z6OK6
+breadboard,canadarobotix.com,1.29,CAD,http://www.canadarobotix.com/dc-barrel-power-connector-breadboard-compatible
 ,,,,
 jumper wires,adafruit.com,3.95,USD,https://www.adafruit.com/product/758
-jumper wires,canadarobotix.com,2.59,CAD,http://www.canadarobotix.com/2293
+jumper wires,canadarobotix.com,1.79,CAD,http://www.canadarobotix.com/2297
 ,,,,
