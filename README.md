@@ -11,6 +11,22 @@ CMPUT 274 Fall 2018
 All modules can be installed using
 `pip3 install --upgrade beautifulsoup4 requests google-api-python-client`
 
+## Running Instructions
+
+Modify partsList.csv for the parts you want to search. Then run
+priceFinder.py. The results will be in output.csv
+
+## Adding new sites into the search
+
+To add new sites, just go into the HTML code for the wanted site to find
+an id, class, or div that identifies the price for products on that site
+Then, add the site name into supportedSites.csv, along with the type
+(id,class,div) as the "bsSearchKwArg" and the identifier as the
+"bsSearchValue".
+
+In the demo, the custom search engine was limited to the 3 supported
+sites we had, but now the limit has been taken away and relies solely on
+our programmed in "site:" search.
 
 ## Comments on Algorithmic Complexity
 
@@ -61,8 +77,13 @@ complex end product.
 
 ## Other Notes
 - The Google API keys are limited to 100 searches a day. The CSE is
-limited to 10,000 searches a day.
-- Amazon.ca scraping doesn't seem to be working on the virtual machine
+limited to 10,000 searches a day. If the limit is reached, the error
+message will say that "billing must be enabled", so please uncomment
+out a different API key and comment out the used key.
+- Amazon.ca scraping doesn't seem to be working, but was previously
+working fine. This may be amazon's site now blocking requests from
+Python programs as per this answer on stackoverflow:
+https://stackoverflow.com/a/41366555
 
 
 ## Achieved Project Goals
